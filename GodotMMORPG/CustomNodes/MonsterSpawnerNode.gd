@@ -42,8 +42,10 @@ func batch_monster_spawn():
 			raycast.get_collision_point().y,
 			rng.randf_range(-radius, radius)
 		)
+		var random_y_rotation = rng.randf_range(0.0, 360.0)
 		monster.name = name + str(i)
 		MonsterPlaceHolder.add_child(monster)
+		monster.rotation.y = random_y_rotation
 		monster.global_position = global_position + random_position
 		
 		
