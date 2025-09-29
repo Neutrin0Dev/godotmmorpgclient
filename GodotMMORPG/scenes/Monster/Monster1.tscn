@@ -26,7 +26,8 @@ mesh = SubResource("CapsuleMesh_ltih6")
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("1_ltih6")
 root = NodePath("..")
-state_properties = Array[String]([":global_transform", ":velocity", ":RandomSeed"])
+enable_prediction = true
+state_properties = Array[String]([":global_transform", ":velocity"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]

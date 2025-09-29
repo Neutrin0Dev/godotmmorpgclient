@@ -59,7 +59,6 @@ spawn_root = NodePath(".")
 script = ExtResource("4_uj34p")
 monster_scene = ExtResource("5_b7nn3")
 MonsterPlaceHolder = NodePath("MonsterPlaceHolder")
-RandomSeed = 12345
 metadata/_custom_type_script = "uid://bei7x6u5yoh6t"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MonsterSpawner"]
@@ -75,5 +74,5 @@ target_position = Vector3(0, -50, 0)
 script = ExtResource("6_aavai")
 root = NodePath("..")
 enable_prediction = true
-state_properties = Array[String]([":global_transform", ":velocity"])
+state_properties = Array[String]([":global_transform", ":velocity", ":RandomSeed"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"

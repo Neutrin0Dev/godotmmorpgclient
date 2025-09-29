@@ -11,7 +11,7 @@ extends Area3D
 @export var spawn_delay: float = 10.0   # Délai de respawn (secondes)
 @export var detection_radius: float = 50.0  # Rayon de détection du joueur
 @export var MonsterPlaceHolder: Node # Node ou les monstres seront instancier
-@export var RandomSeed: int
+var RandomSeed: int = 1
 # Variables internes
 var current_monsters_count: int = 0
 var players_in_zone: Array = []
@@ -36,7 +36,6 @@ func batch_monster_spawn():
 
 	for i in range(monster_counter):
 		var monster = monster_scene.instantiate() as CharacterBody3D
-		monster.set_multiplayer_authority(1)
 		var random_position = Vector3(
 			rng.randf_range(-radius, radius),
 			raycast.get_collision_point().y,
@@ -45,8 +44,10 @@ func batch_monster_spawn():
 		var random_y_rotation = rng.randf_range(0.0, 360.0)
 		monster.name = name + str(i)
 		MonsterPlaceHolder.add_child(monster)
+		monster.set_multiplayer_authority(1)
 		monster.rotation.y = random_y_rotation
 		monster.global_position = global_position + random_position
+		RandomSeed += 1
 		
 		
 	

@@ -5,15 +5,10 @@ extends CharacterBody3D
 @export var wander_radius: float = 5.0
 @export var wander_timer: float = 3.0
 
-@onready var rng = RandomNumberGenerator.new()
 
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 var target_position: Vector3
 var time_until_next_wander: float = 0.0
-var RandomSeed: int = 12345
-
-func _ready() -> void:
-	rng.seed = RandomSeed
 
 func _rollback_tick(delta, tick, is_fresh):
 	_force_update_is_on_floor()
@@ -23,7 +18,7 @@ func _rollback_tick(delta, tick, is_fresh):
 	time_until_next_wander -= delta
 	
 	if time_until_next_wander <= 0.0:		
-		var random_angle = rng.randf_range(0, TAU)
+		var random_angle = randf_range(0, TAU)
 		target_position = global_position + Vector3(cos(random_angle), 0, sin(random_angle)) * wander_radius
 		time_until_next_wander = wander_timer
 		
