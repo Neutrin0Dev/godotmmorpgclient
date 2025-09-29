@@ -18,6 +18,10 @@ var players_in_zone: Array = []
 var spawn_timer: Timer
 
 func _ready() -> void:
+	if not multiplayer.is_server():
+		print("check autorité coté client = " + str(get_multiplayer_authority()))
+		return
+	print("check autorité coté serveur = " + str(get_multiplayer_authority()))
 	rng.seed = RandomSeed
 	NetworkTime.on_tick.connect(monster_spawning)
 	
@@ -35,16 +39,15 @@ func batch_monster_spawn():
 		print("Rayon de la sphère : ", radius)
 
 	for i in range(monster_counter):
-		var monster = monster_scene.instantiate() as Node3D
+		var monster = monster_scene.instantiate() as CharacterBody3D
+		monster.set_multiplayer_authority(1)
 		var random_position = Vector3(
 			rng.randf_range(-radius, radius),
 			raycast.get_collision_point().y,
 			rng.randf_range(-radius, radius)
 		)
 		monster.name = name + str(i)
-		monster.set_multiplayer_authority(1)
 		MonsterPlaceHolder.add_child(monster)
-		
 		monster.global_position = global_position + random_position
 		
 		

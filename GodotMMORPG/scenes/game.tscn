@@ -74,5 +74,5 @@ target_position = Vector3(0, -50, 0)
 [node name="RollbackSynchronizer" type="Node" parent="MonsterSpawner" node_paths=PackedStringArray("root")]
 script = ExtResource("6_aavai")
 root = NodePath("..")
-state_properties = Array[String]([":global_position", ":RandomSeed"])
+state_properties = Array[String]([":RandomSeed"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"
