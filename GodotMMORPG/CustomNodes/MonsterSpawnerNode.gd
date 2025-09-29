@@ -42,8 +42,9 @@ func batch_monster_spawn():
 			rng.randf_range(-radius, radius)
 		)
 		monster.name = name + str(i)
-		MonsterPlaceHolder.add_child(monster)
 		monster.set_multiplayer_authority(1)
+		MonsterPlaceHolder.add_child(monster)
+		
 		monster.global_position = global_position + random_position
 		
 		

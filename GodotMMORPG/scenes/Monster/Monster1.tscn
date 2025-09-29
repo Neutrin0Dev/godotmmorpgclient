@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgl5ge6klyyfj"]
+[gd_scene load_steps=7 format=3 uid="uid://cgl5ge6klyyfj"]
 
+[ext_resource type="Script" uid="uid://btvepa2dg184" path="res://GodotMMORPG/scenes/Monster/monster_1.gd" id="1_0t8i0"]
 [ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="1_ltih6"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_8goxk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dhj2s"]
 albedo_color = Color(1, 0, 0, 1)
@@ -11,13 +13,7 @@ material = SubResource("StandardMaterial3D_dhj2s")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ltih6"]
 
 [node name="Monster1" type="Node3D"]
-
-[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("1_ltih6")
-root = NodePath("..")
-state_properties = Array[String]([":global_transform"])
-enable_input_broadcast = false
-metadata/_custom_type_script = "uid://d350u8evihs1u"
+script = ExtResource("1_0t8i0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -27,3 +23,15 @@ mesh = SubResource("CapsuleMesh_ltih6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("CapsuleShape3D_ltih6")
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("1_ltih6")
+root = NodePath("..")
+state_properties = Array[String]([":global_transform", ":velocity"])
+enable_input_broadcast = false
+metadata/_custom_type_script = "uid://d350u8evihs1u"
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_8goxk")
+root = NodePath("..")
+metadata/_custom_type_script = "uid://dour8fehaaugp"
