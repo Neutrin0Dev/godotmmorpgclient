@@ -17,9 +17,7 @@ var current_monsters_count: int = 0
 var players_in_zone: Array = []
 var spawn_timer: Timer
 
-
 func _ready() -> void:
-	
 	rng.seed = RandomSeed
 	NetworkTime.on_tick.connect(monster_spawning)
 	
