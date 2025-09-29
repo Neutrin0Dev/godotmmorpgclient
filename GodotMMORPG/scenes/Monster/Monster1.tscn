@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgl5ge6klyyfj"]
+
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="1_ltih6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dhj2s"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ltih6"]
+material = SubResource("StandardMaterial3D_dhj2s")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ltih6"]
+
+[node name="Monster1" type="Node3D"]
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("1_ltih6")
+root = NodePath("..")
+state_properties = Array[String]([":global_transform"])
+enable_input_broadcast = false
+metadata/_custom_type_script = "uid://d350u8evihs1u"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_ltih6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("CapsuleShape3D_ltih6")

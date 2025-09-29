@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://ce61e3bbu50m5"]
+
+[ext_resource type="Script" uid="uid://kshm05dhss63" path="res://GodotMMORPG/scripts/player.gd" id="1_miob0"]
+[ext_resource type="Script" uid="uid://dsyg552db0uro" path="res://GodotMMORPG/scripts/player_input.gd" id="2_24vpj"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_b0nqb"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_mnvxf"]
+[ext_resource type="Script" uid="uid://3lbngqcexe0l" path="res://addons/netfox/state-synchronizer.gd" id="4_mnvxf"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_f4qfr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_miob0"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("input")]
+collision_mask = 2
+script = ExtResource("1_miob0")
+input = NodePath("Input")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_f4qfr")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_miob0")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.976008, 0.217734, 0, -0.217734, 0.976008, 0, 1.54909, 4.21737)
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_b0nqb")
+root = NodePath("..")
+enable_prediction = true
+state_properties = Array[String]([":global_transform", ":velocity"])
+input_properties = Array[String](["Input:movement", "Input:input_jump"])
+enable_input_broadcast = false
+metadata/_custom_type_script = "uid://d350u8evihs1u"
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_mnvxf")
+root = NodePath("..")
+properties = Array[String]([":global_transform"])
+metadata/_custom_type_script = "uid://dour8fehaaugp"
+
+[node name="StateSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("4_mnvxf")
+root = NodePath("..")
+properties = Array[String]([":global_transform"])
+metadata/_custom_type_script = "uid://3lbngqcexe0l"
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("2_24vpj")
