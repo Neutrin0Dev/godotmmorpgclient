@@ -47,7 +47,7 @@ func batch_monster_spawn():
 		monster.set_multiplayer_authority(1)
 		monster.rotation.y = random_y_rotation
 		monster.global_position = global_position + random_position
-		RandomSeed += 1
+		RandomSeed = RandomSeed + 1
 		
 		
 	
