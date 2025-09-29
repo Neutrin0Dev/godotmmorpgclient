@@ -18,10 +18,6 @@ var players_in_zone: Array = []
 var spawn_timer: Timer
 
 func _ready() -> void:
-	if not multiplayer.is_server():
-		print("check autorité coté client = " + str(get_multiplayer_authority()))
-		return
-	print("check autorité coté serveur = " + str(get_multiplayer_authority()))
 	rng.seed = RandomSeed
 	NetworkTime.on_tick.connect(monster_spawning)
 	
