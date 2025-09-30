@@ -17,3 +17,4 @@ func start_server() -> void:
 	peer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT,MAX_CLIENTS)
 	multiplayer.multiplayer_peer = peer
+	

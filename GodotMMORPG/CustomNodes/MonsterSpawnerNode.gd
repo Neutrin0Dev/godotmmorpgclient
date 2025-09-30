@@ -15,10 +15,13 @@ var players_in_zone: Array = []
 var spawn_timer: Timer
 var random_position
 
+
+
 func _ready() -> void:
 	NetworkTime.on_tick.connect(monster_spawning)
+
 	
-func monster_spawning(ticktime, tick):
+func monster_spawning(delta, tick):
 	current_monsters_count = $MonsterPlaceHolder.get_child_count()
 	if current_monsters_count == 0 :
 		batch_monster_spawn()
@@ -34,12 +37,12 @@ func batch_monster_spawn():
 		var monster = monster_scene.instantiate() as CharacterBody3D
 		random_position = Vector3(
 			rng.randf_range(-radius, radius),
-			1,
+			0,
 			rng.randf_range(-radius, radius)
 		)
 		monster.name = name + str(i)
-		MonsterPlaceHolder.add_child(monster)
 		monster.set_multiplayer_authority(1)
+		MonsterPlaceHolder.add_child(monster)
 		monster.global_position = global_position + random_position
 		
 		
