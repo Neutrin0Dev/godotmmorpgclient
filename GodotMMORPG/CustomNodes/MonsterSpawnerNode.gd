@@ -14,7 +14,12 @@ var current_monsters_count: int = 0
 var random_position : Vector3
 
 func _ready() -> void:
-	NetworkTime.on_tick.connect(monster_spawning)
+	set_multiplayer_authority(1)
+	
+func _rollback_tick(delta, tick, is_fresh):
+	current_monsters_count = MonsterPlaceHolder.get_child_count()
+	if current_monsters_count == 0:
+		batch_monster_spawn()
 
 func monster_spawning(delta, tick):
 	current_monsters_count = $MonsterPlaceHolder.get_child_count()
@@ -23,6 +28,7 @@ func monster_spawning(delta, tick):
 		batch_monster_spawn()
 
 func batch_monster_spawn():
+	print("======================================test")
 	for i in range(monster_counter):
 		var monster = monster_scene.instantiate() as CharacterBody3D
 		var calculated_position : Vector3 = random_position_calcule()
