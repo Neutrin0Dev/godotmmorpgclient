@@ -8,15 +8,16 @@ extends Area3D
 # Variables exportées (modifiables dans l'inspecteur)
 @export var monster_scene: PackedScene  # Scène du monstre à spawner
 @export var monster_counter: int = 3     # Nombre max de monstres
-@export var spawn_delay: float = 10.0   # Délai de respawn (secondes)
-@export var detection_radius: float = 50.0  # Rayon de détection du joueur
 @export var MonsterPlaceHolder: Node # Node ou les monstres seront instancier
 # Variables internes
 var current_monsters_count: int = 0
 var players_in_zone: Array = []
 var spawn_timer: Timer
+var random_position
 
 func _ready() -> void:
+	NetworkTime.stop()
+	NetworkTime.start()
 	NetworkTime.on_tick.connect(monster_spawning)
 	
 func monster_spawning(ticktime, tick):
@@ -30,20 +31,17 @@ func batch_monster_spawn():
 	if collision_shape.shape is SphereShape3D:
 		var sphere_shape = collision_shape.shape as SphereShape3D
 		radius = sphere_shape.radius
-		print("Rayon de la sphère : ", radius)
 
 	for i in range(monster_counter):
 		var monster = monster_scene.instantiate() as CharacterBody3D
-		var random_position = Vector3(
+		random_position = Vector3(
 			rng.randf_range(-radius, radius),
-			raycast.get_collision_point().y,
+			1,
 			rng.randf_range(-radius, radius)
 		)
-		var random_y_rotation = rng.randf_range(0.0, 360.0)
 		monster.name = name + str(i)
 		MonsterPlaceHolder.add_child(monster)
 		monster.set_multiplayer_authority(1)
-		monster.rotation.y = random_y_rotation
 		monster.global_position = global_position + random_position
 		
 		

@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var wander_radius: float = 5.0
 @export var wander_timer: float = 3.0
 @onready var rng = RewindableRandomNumberGenerator.new(15)
-
+@onready var spawn_position = get_global_transform()
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 var target_position: Vector3
 var time_until_next_wander: float = 0.0

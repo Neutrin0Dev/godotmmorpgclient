@@ -74,5 +74,5 @@ target_position = Vector3(0, -50, 0)
 script = ExtResource("6_aavai")
 root = NodePath("..")
 enable_prediction = true
-state_properties = Array[String]([":global_transform", ":rng"])
+state_properties = Array[String]([":random_position", ":global_transform"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"

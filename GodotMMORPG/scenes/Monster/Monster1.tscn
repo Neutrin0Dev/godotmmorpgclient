@@ -13,6 +13,7 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_dhj2s")
 
 [node name="Monster1" type="CharacterBody3D"]
+collision_mask = 2
 script = ExtResource("1_0t8i0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -27,7 +28,7 @@ mesh = SubResource("CapsuleMesh_ltih6")
 script = ExtResource("1_ltih6")
 root = NodePath("..")
 enable_prediction = true
-state_properties = Array[String]([":global_transform", ":velocity", ":rng"])
+state_properties = Array[String]([":global_transform", ":rng", ":spawn_position"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
