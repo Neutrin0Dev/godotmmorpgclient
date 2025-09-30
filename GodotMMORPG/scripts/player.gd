@@ -5,10 +5,6 @@ const JUMP_VELOCITY = 4.5
 @export var input: PlayerInput
 @onready var rollback_synchronizer = $RollbackSynchronizer
 
-func _ready() -> void:
-	if name == "Player #1":
-		self.hide()
-
 func _rollback_tick(delta, tick, is_fresh):
 	if is_zero_approx(input.confidence):
 		# Can't predict, not enough confidence in input

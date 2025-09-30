@@ -1,6 +1,5 @@
-[gd_scene load_steps=13 format=3 uid="uid://dpy65vd01mbnl"]
+[gd_scene load_steps=12 format=3 uid="uid://dpy65vd01mbnl"]
 
-[ext_resource type="PackedScene" uid="uid://dtlvsgui2grs5" path="res://GodotMMORPG/scenes/ui.tscn" id="1_nax5t"]
 [ext_resource type="Script" uid="uid://sg4yenobmfsf" path="res://GodotMMORPG/scripts/multiplayer_spawner.gd" id="2_qynuh"]
 [ext_resource type="PackedScene" uid="uid://ce61e3bbu50m5" path="res://GodotMMORPG/scenes/player.tscn" id="3_qynuh"]
 [ext_resource type="Script" uid="uid://bei7x6u5yoh6t" path="res://GodotMMORPG/CustomNodes/MonsterSpawnerNode.gd" id="4_uj34p"]
@@ -37,8 +36,6 @@ environment = SubResource("Environment_b7nn3")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
-
-[node name="UI" parent="." instance=ExtResource("1_nax5t")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.54671, 0)

@@ -16,8 +16,6 @@ var spawn_timer: Timer
 var random_position
 
 func _ready() -> void:
-	NetworkTime.stop()
-	NetworkTime.start()
 	NetworkTime.on_tick.connect(monster_spawning)
 	
 func monster_spawning(ticktime, tick):
