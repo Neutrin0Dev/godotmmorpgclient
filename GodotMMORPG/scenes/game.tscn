@@ -65,7 +65,7 @@ debug_color = Color(0, 0.6, 0.701961, 0.905882)
 [node name="RayCast3D" type="RayCast3D" parent="MonsterSpawner"]
 target_position = Vector3(0, -50, 0)
 
-[node name="MonsterPlaceHolder" type="Node" parent="MonsterSpawner"]
+[node name="MonsterPlaceHolder" type="Node3D" parent="MonsterSpawner"]
 
 [node name="RollbackSynchronizer" type="Node" parent="MonsterSpawner" node_paths=PackedStringArray("root")]
 script = ExtResource("6_aavai")

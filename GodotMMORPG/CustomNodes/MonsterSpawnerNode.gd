@@ -8,7 +8,7 @@ extends Area3D
 # Variables exportées (modifiables dans l'inspecteur)
 @export var monster_scene: PackedScene  # Scène du monstre à spawner
 @export var monster_counter: int = 3     # Nombre max de monstres
-@export var MonsterPlaceHolder: Node # Node ou les monstres seront instancier
+@export var MonsterPlaceHolder: Node3D # Node ou les monstres seront instancier
 # Variables internes
 var current_monsters_count: int = 0
 var players_in_zone: Array = []
@@ -18,10 +18,10 @@ var random_position
 
 
 func _ready() -> void:
-	NetworkTime.on_tick.connect(monster_spawning)
+	NetworkTime.after_tick_loop.connect(monster_spawning)
 
 	
-func monster_spawning(delta, tick):
+func monster_spawning():
 	current_monsters_count = $MonsterPlaceHolder.get_child_count()
 	if current_monsters_count == 0 :
 		batch_monster_spawn()
