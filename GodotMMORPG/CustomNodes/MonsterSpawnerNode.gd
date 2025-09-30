@@ -1,5 +1,4 @@
 # MonsterSpawner.gd
-@tool
 class_name MonsterSpawner
 extends Area3D
 
