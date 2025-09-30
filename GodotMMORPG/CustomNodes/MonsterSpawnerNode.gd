@@ -12,8 +12,10 @@ extends Area3D
 # Variables internes
 var current_monsters_count: int = 0
 var random_position : Vector3
+@onready var rollbackSynchroniser = $RollbackSynchronizer
 
 func _ready() -> void:
+	rollbackSynchroniser.process_settings()
 	NetworkTime.on_tick.connect(monster_spawning)
 
 func monster_spawning(delta, tick):

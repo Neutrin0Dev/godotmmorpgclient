@@ -9,6 +9,10 @@ extends CharacterBody3D
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 var target_position: Vector3
 var time_until_next_wander: float = 0.0
+@onready var rollbackSynchroniser = $RollbackSynchronizer
+
+func _ready() -> void:
+	rollbackSynchroniser.process_settings()
 
 func _rollback_tick(delta, tick, is_fresh):
 	_force_update_is_on_floor()
