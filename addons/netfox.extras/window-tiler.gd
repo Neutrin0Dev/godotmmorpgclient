@@ -1,12 +1,7 @@
 extends Node
 
-# Settings
-var _is_enabled: bool = ProjectSettings.get_setting(&"netfox/extras/auto_tile_windows", false)
-var _is_borderless: bool = ProjectSettings.get_setting(&"netfox/extras/borderless", false)
-var _tile_screen: int = ProjectSettings.get_setting(&"netfox/extras/screen", 0)
-
 # Hash the game name, so we always get a valid filename
-var _prefix: String = "netfox-window-tiler-%x" % [ProjectSettings.get_setting(&"application/config/name").hash()]
+var _prefix: String = "netfox-window-tiler-%x" % [ProjectSettings.get("application/config/name").hash()]
 
 var _sid: String = "%x" % [hash(int(Time.get_unix_time_from_system() / 2.))]
 var _uid: String = "%d" % [Time.get_unix_time_from_system() * 1000_0000.]
@@ -30,7 +25,7 @@ func _ready() -> void:
 		return
 
 	# Don't tile if disabled
-	if not _is_enabled:
+	if not ProjectSettings.get_setting("netfox/extras/auto_tile_windows", false):
 		return
 
 	_logger.debug("Tiling with sid: %s, uid: %s", [_sid, _uid])
@@ -101,7 +96,7 @@ func _get_uid(filename: String) -> String:
 	return filename.substr(_prefix.length() + 1).get_slice("-", 1)
 
 func _tile_window(i: int, total: int) -> void:
-	var screen = _tile_screen
+	var screen = ProjectSettings.get_setting("netfox/extras/screen", 0)
 	var screen_rect = DisplayServer.screen_get_usable_rect(screen)
 
 	var window: Window = get_tree().get_root()
@@ -111,7 +106,7 @@ func _tile_window(i: int, total: int) -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 		return
 
-	window.borderless = _is_borderless
+	window.borderless = ProjectSettings.get_setting("netfox/extras/borderless", false)
 
 	# Divide up the screen
 	var windows_per_row = int(ceil(sqrt(total)))

@@ -3,7 +3,7 @@ class_name MonsterSpawner
 extends Area3D
 
 @onready var raycast : RayCast3D = $RayCast3D
-@onready var rng = RewindableRandomNumberGenerator.new(15)
+@onready var rng = RandomNumberGenerator.new()
 # Variables exportées (modifiables dans l'inspecteur)
 @export var monster_scene: PackedScene  # Scène du monstre à spawner
 @export var monster_counter: int = 3     # Nombre max de monstres
@@ -11,10 +11,9 @@ extends Area3D
 # Variables internes
 var current_monsters_count: int = 0
 var random_position : Vector3
-@onready var rollbackSynchroniser = $RollbackSynchronizer
+var seed : int = 1
 
 func _ready() -> void:
-	rollbackSynchroniser.process_settings()
 	NetworkTime.on_tick.connect(monster_spawning)
 
 func monster_spawning(delta, tick):
@@ -33,6 +32,7 @@ func batch_monster_spawn():
 		monster.global_position = global_position + calculated_position
 
 func random_position_calcule():
+	rng.seed = seed
 	var collision_shape : CollisionShape3D = $CollisionShape3D
 	var radius : float = 0.0
 	if collision_shape.shape is SphereShape3D:
@@ -45,4 +45,6 @@ func random_position_calcule():
 			rng.randf_range(-radius, radius)
 		)
 		position_calculated = random_position
+		seed = seed + 1
+		print(seed)
 		return position_calculated

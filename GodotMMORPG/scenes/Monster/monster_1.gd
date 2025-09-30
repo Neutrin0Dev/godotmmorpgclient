@@ -2,18 +2,16 @@
 extends CharacterBody3D
 
 @export var speed: float = 2.0
-@export var wander_radius: float = 5.0
-@export var wander_timer: float = 3.0
-@onready var rng = RewindableRandomNumberGenerator.new(15)
-@onready var spawn_position = global_position
+@export var wander_radius: float 
+@export var wander_timer: float 
+@onready var rng = RandomNumberGenerator.new()
 var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 var target_position: Vector3
 var time_until_next_wander: float = 0.0
-@onready var rollbackSynchroniser = $RollbackSynchronizer
 
 func _ready() -> void:
-	rollbackSynchroniser.process_settings()
-
+	wander_timer = rng.randf_range(5.0,10.0)
+	wander_radius = wander_timer
 func _rollback_tick(delta, tick, is_fresh):
 	_force_update_is_on_floor()
 	if not is_on_floor():

@@ -28,7 +28,7 @@ mesh = SubResource("CapsuleMesh_ltih6")
 script = ExtResource("1_ltih6")
 root = NodePath("..")
 enable_prediction = true
-state_properties = Array[String]([":global_transform", ":velocity"])
+state_properties = Array[String]([":global_transform", ":velocity", ":rng", ":seed", ":wander_radius", ":wander_timer"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
