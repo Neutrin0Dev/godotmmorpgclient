@@ -5,7 +5,7 @@ extends Area3D
 @onready var raycast : RayCast3D = $RayCast3D
 @onready var rng = RandomNumberGenerator.new()
 # Variables exportées (modifiables dans l'inspecteur)
-@export var monster_scene: PackedScene  # Scène du monstre à spawner
+@onready var monster_scene= preload("res://GodotMMORPG/scenes/Monster/Monster1.tscn")  # Scène du monstre à spawner
 @export var monster_counter: int = 3     # Nombre max de monstres
 @export var MonsterPlaceHolder: Node3D # Node ou les monstres seront instancier
 # Variables internes
@@ -25,10 +25,10 @@ func monster_spawning(delta, tick):
 func batch_monster_spawn():
 	for i in range(monster_counter):
 		var monster = monster_scene.instantiate() as CharacterBody3D
-		monster.set_multiplayer_authority(1)
 		var calculated_position : Vector3 = random_position_calcule()
-		monster.name = name + str(i)
+		monster.name = "monster " + str(i)
 		MonsterPlaceHolder.add_child(monster)
+		monster.set_multiplayer_authority(1)
 		monster.global_position = global_position + calculated_position
 
 func random_position_calcule():
@@ -41,7 +41,7 @@ func random_position_calcule():
 		radius = sphere_shape.radius
 		random_position = Vector3(
 			rng.randf_range(-radius, radius),
-			0,
+			rng.randf_range(2, radius),
 			rng.randf_range(-radius, radius)
 		)
 		position_calculated = random_position

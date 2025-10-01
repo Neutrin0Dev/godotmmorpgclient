@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://cgl5ge6klyyfj"]
 
 [ext_resource type="Script" uid="uid://btvepa2dg184" path="res://GodotMMORPG/scenes/Monster/monster_1.gd" id="1_0t8i0"]
-[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="1_ltih6"]
-[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_8goxk"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_8goxk"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_e0lrr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ltih6"]
 
@@ -15,8 +15,6 @@ material = SubResource("StandardMaterial3D_dhj2s")
 [node name="Monster1" type="CharacterBody3D"]
 collision_mask = 2
 script = ExtResource("1_0t8i0")
-wander_radius = 5.57724
-wander_timer = 5.57724
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -27,15 +25,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ltih6")
 
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
-process_mode = 3
-script = ExtResource("1_ltih6")
+script = ExtResource("2_8goxk")
 root = NodePath("..")
-state_properties = Array[String]([":global_transform", ":velocity", ":rng", ":wander_radius", ":wander_timer", ":time_until_next_wander"])
-enable_input_broadcast = false
+state_properties = Array[String]([":global_position", ":velocity"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("3_8goxk")
+script = ExtResource("3_e0lrr")
 root = NodePath("..")
-properties = Array[String]([":global_transform"])
+properties = Array[String]([":global_transform", ":velocity"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"

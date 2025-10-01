@@ -1,3 +1,4 @@
+#network_handler.gd
 extends Node
 
 const IP_ADRESS: String = "localhost"
