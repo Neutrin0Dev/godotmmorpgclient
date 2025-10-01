@@ -56,6 +56,7 @@ player_scene = ExtResource("3_qynuh")
 spawn_root = NodePath(".")
 
 [node name="MonsterSpawner" type="Area3D" parent="." node_paths=PackedStringArray("MonsterPlaceHolder")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.89174)
 script = ExtResource("4_uj34p")
 monster_scene = ExtResource("5_b7nn3")
 MonsterPlaceHolder = NodePath("MonsterPlaceHolder")
@@ -75,3 +76,5 @@ script = ExtResource("6_aavai")
 root = NodePath("..")
 properties = Array[String]([":sync_seed", ":random_position"])
 metadata/_custom_type_script = "uid://3lbngqcexe0l"
+
+[connection signal="body_entered" from="MonsterSpawner" to="MonsterSpawner" method="_on_body_entered"]

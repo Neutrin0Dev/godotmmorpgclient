@@ -27,6 +27,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ltih6")
 
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+process_mode = 3
 script = ExtResource("1_ltih6")
 root = NodePath("..")
 state_properties = Array[String]([":global_transform", ":velocity", ":rng", ":wander_radius", ":wander_timer", ":time_until_next_wander"])
