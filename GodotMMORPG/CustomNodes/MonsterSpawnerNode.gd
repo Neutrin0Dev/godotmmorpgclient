@@ -25,9 +25,9 @@ func monster_spawning(delta, tick):
 func batch_monster_spawn():
 	for i in range(monster_counter):
 		var monster = monster_scene.instantiate() as CharacterBody3D
+		monster.set_multiplayer_authority(1)
 		var calculated_position : Vector3 = random_position_calcule()
 		monster.name = name + str(i)
-		monster.set_multiplayer_authority(1)
 		MonsterPlaceHolder.add_child(monster)
 		monster.global_position = global_position + calculated_position
 

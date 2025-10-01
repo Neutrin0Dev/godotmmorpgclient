@@ -1,11 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dpy65vd01mbnl"]
+[gd_scene load_steps=12 format=3 uid="uid://dpy65vd01mbnl"]
 
 [ext_resource type="PackedScene" uid="uid://dtlvsgui2grs5" path="res://GodotMMORPG/scenes/ui.tscn" id="1_b7nn3"]
 [ext_resource type="Script" uid="uid://sg4yenobmfsf" path="res://GodotMMORPG/scripts/multiplayer_spawner.gd" id="2_qynuh"]
 [ext_resource type="PackedScene" uid="uid://ce61e3bbu50m5" path="res://GodotMMORPG/scenes/player.tscn" id="3_qynuh"]
 [ext_resource type="Script" uid="uid://bei7x6u5yoh6t" path="res://GodotMMORPG/CustomNodes/MonsterSpawnerNode.gd" id="4_uj34p"]
 [ext_resource type="PackedScene" uid="uid://cgl5ge6klyyfj" path="res://GodotMMORPG/scenes/Monster/Monster1.tscn" id="5_b7nn3"]
-[ext_resource type="Script" uid="uid://3lbngqcexe0l" path="res://addons/netfox/state-synchronizer.gd" id="6_aavai"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qynuh"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -70,11 +69,5 @@ debug_color = Color(0, 0.6, 0.701961, 0.905882)
 target_position = Vector3(0, -50, 0)
 
 [node name="MonsterPlaceHolder" type="Node3D" parent="MonsterSpawner"]
-
-[node name="StateSynchronizer" type="Node" parent="MonsterSpawner" node_paths=PackedStringArray("root")]
-script = ExtResource("6_aavai")
-root = NodePath("..")
-properties = Array[String]([":sync_seed", ":random_position"])
-metadata/_custom_type_script = "uid://3lbngqcexe0l"
 
 [connection signal="body_entered" from="MonsterSpawner" to="MonsterSpawner" method="_on_body_entered"]
