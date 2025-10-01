@@ -11,7 +11,7 @@ extends Area3D
 # Variables internes
 var current_monsters_count: int = 0
 var random_position : Vector3
-var seed : int = 1
+var sync_seed : int = 1
 
 func _ready() -> void:
 	NetworkTime.on_tick.connect(monster_spawning)
@@ -32,7 +32,7 @@ func batch_monster_spawn():
 		monster.global_position = global_position + calculated_position
 
 func random_position_calcule():
-	rng.seed = seed
+	rng.seed = sync_seed
 	var collision_shape : CollisionShape3D = $CollisionShape3D
 	var radius : float = 0.0
 	if collision_shape.shape is SphereShape3D:
@@ -45,6 +45,6 @@ func random_position_calcule():
 			rng.randf_range(-radius, radius)
 		)
 		position_calculated = random_position
-		seed = seed + 1
-		print(seed)
+		sync_seed += 1
+		print(sync_seed)
 		return position_calculated

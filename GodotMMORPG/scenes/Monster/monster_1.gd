@@ -12,7 +12,10 @@ var time_until_next_wander: float = 0.0
 func _ready() -> void:
 	wander_timer = rng.randf_range(5.0,10.0)
 	wander_radius = wander_timer
+
 func _rollback_tick(delta, tick, is_fresh):
+	if is_multiplayer_authority():
+		prints(multiplayer.get_unique_id(), multiplayer.is_server(), global_position)
 	_force_update_is_on_floor()
 	if not is_on_floor():
 		velocity.y -= gravity * delta
