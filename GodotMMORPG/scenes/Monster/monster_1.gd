@@ -8,6 +8,7 @@ var gravity = ProjectSettings.get_setting(&"physics/3d/default_gravity")
 var target_position: Vector3
 var time_until_next_wander: float = 0.0
 
+
 func _ready() -> void:
 	wander_timer = rng.randf_range(5.0,10.0)
 	wander_radius = wander_timer

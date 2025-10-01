@@ -16,15 +16,13 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Client" type="Button" parent="VBoxContainer"]
+[node name="Client2" type="CheckBox" parent="VBoxContainer"]
 layout_mode = 2
-text = "Client
-"
+text = "Client"
 
-[node name="Server" type="Button" parent="VBoxContainer"]
+[node name="Server2" type="CheckBox" parent="VBoxContainer"]
 layout_mode = 2
-text = "Server
-"
+text = "Server"
 
-[connection signal="pressed" from="VBoxContainer/Client" to="." method="_on_client_pressed"]
-[connection signal="pressed" from="VBoxContainer/Server" to="." method="_on_server_pressed"]
+[connection signal="toggled" from="VBoxContainer/Client2" to="." method="_on_client_2_toggled"]
+[connection signal="toggled" from="VBoxContainer/Server2" to="." method="_on_server_2_toggled"]

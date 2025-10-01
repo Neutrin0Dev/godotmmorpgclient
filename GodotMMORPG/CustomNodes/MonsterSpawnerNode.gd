@@ -46,5 +46,4 @@ func random_position_calcule():
 		)
 		position_calculated = random_position
 		sync_seed += 1
-		print(sync_seed)
 		return position_calculated
