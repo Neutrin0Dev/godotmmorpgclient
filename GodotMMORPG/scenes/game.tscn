@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpy65vd01mbnl"]
+[gd_scene load_steps=12 format=3 uid="uid://dpy65vd01mbnl"]
 
+[ext_resource type="PackedScene" uid="uid://dtlvsgui2grs5" path="res://GodotMMORPG/scenes/ui.tscn" id="1_b7nn3"]
 [ext_resource type="Script" uid="uid://sg4yenobmfsf" path="res://GodotMMORPG/scripts/multiplayer_spawner.gd" id="2_qynuh"]
 [ext_resource type="PackedScene" uid="uid://ce61e3bbu50m5" path="res://GodotMMORPG/scenes/player.tscn" id="3_qynuh"]
 [ext_resource type="Script" uid="uid://bei7x6u5yoh6t" path="res://GodotMMORPG/CustomNodes/MonsterSpawnerNode.gd" id="4_uj34p"]
@@ -28,6 +29,8 @@ data = PackedVector3Array(-50, 0.5, 50, 50, 0.5, 50, -50, -0.5, 50, 50, 0.5, 50,
 radius = 3.93834
 
 [node name="Game" type="Node3D"]
+
+[node name="UI" parent="." instance=ExtResource("1_b7nn3")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_b7nn3")
