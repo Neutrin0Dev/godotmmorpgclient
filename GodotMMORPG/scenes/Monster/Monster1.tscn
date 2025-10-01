@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgl5ge6klyyfj"]
+[gd_scene load_steps=7 format=3 uid="uid://cgl5ge6klyyfj"]
 
 [ext_resource type="Script" uid="uid://btvepa2dg184" path="res://GodotMMORPG/scenes/Monster/monster_1.gd" id="1_0t8i0"]
-[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_8goxk"]
-[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_e0lrr"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_0t8i0"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_8goxk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ltih6"]
 
@@ -11,11 +11,6 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ltih6"]
 material = SubResource("StandardMaterial3D_dhj2s")
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8goxk"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [node name="Monster1" type="CharacterBody3D"]
 collision_mask = 2
@@ -30,16 +25,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_ltih6")
 
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("2_8goxk")
+script = ExtResource("2_0t8i0")
 root = NodePath("..")
-state_properties = Array[String]([":global_position", ":velocity"])
+state_properties = Array[String]([":global_transform", ":velocity"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("3_e0lrr")
+script = ExtResource("3_8goxk")
 root = NodePath("..")
-properties = Array[String]([":global_transform", ":velocity"])
+properties = Array[String]([":global_transform"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_8goxk")
