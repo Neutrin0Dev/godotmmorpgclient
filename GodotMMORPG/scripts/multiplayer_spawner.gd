@@ -1,4 +1,4 @@
-extends Node
+extends Node3D
 
 @export var player_scene: PackedScene
 @export var spawn_root: Node
@@ -29,7 +29,7 @@ func _handle_leave(id: int):
 	if not players.has(id):
 		return
 	
-	var player = players[id] as Node
+	var player = players[id] as CharacterBody3D
 	player.queue_free()
 	players.erase(id)
 
@@ -40,7 +40,7 @@ func _handle_stop():
 	players.clear()
 
 func _spawn(id: int):
-	var player = player_scene.instantiate() as Node
+	var player = player_scene.instantiate() as CharacterBody3D
 	players[id] = player
 	player.name += " #%d" % id
 	spawn_root.add_child(player)

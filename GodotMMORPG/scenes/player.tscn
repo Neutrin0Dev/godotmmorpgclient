@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://ce61e3bbu50m5"]
+[gd_scene load_steps=7 format=3 uid="uid://ce61e3bbu50m5"]
 
 [ext_resource type="Script" uid="uid://kshm05dhss63" path="res://GodotMMORPG/scripts/player.gd" id="1_miob0"]
 [ext_resource type="Script" uid="uid://dsyg552db0uro" path="res://GodotMMORPG/scripts/player_input.gd" id="2_24vpj"]
 [ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_b0nqb"]
 [ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_mnvxf"]
-[ext_resource type="Script" uid="uid://3lbngqcexe0l" path="res://addons/netfox/state-synchronizer.gd" id="4_mnvxf"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_f4qfr"]
 
@@ -39,12 +38,6 @@ script = ExtResource("3_mnvxf")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
-
-[node name="StateSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
-script = ExtResource("4_mnvxf")
-root = NodePath("..")
-properties = Array[String]([":global_transform"])
-metadata/_custom_type_script = "uid://3lbngqcexe0l"
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource("2_24vpj")
