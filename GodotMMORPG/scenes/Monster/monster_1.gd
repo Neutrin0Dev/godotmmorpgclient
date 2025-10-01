@@ -1,10 +1,8 @@
 extends CharacterBody3D
 
-@onready var rollback_synchronizer = $RollbackSynchronizer
-
-func _ready() -> void:
-	print(multiplayer.get_peers())
-
+func _enter_tree() -> void:
+	print(find_child("RollbackSynchronizer").state_properties)
+	
 func _rollback_tick(delta, tick, is_fresh):
 	print("rollback_tick()")
 	if not is_on_floor():
