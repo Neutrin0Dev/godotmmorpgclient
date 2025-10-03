@@ -26,7 +26,7 @@ size = Vector3(100, 1, 100)
 data = PackedVector3Array(-50, 0.5, 50, 50, 0.5, 50, -50, -0.5, 50, 50, 0.5, 50, 50, -0.5, 50, -50, -0.5, 50, 50, 0.5, -50, -50, 0.5, -50, 50, -0.5, -50, -50, 0.5, -50, -50, -0.5, -50, 50, -0.5, -50, 50, 0.5, 50, 50, 0.5, -50, 50, -0.5, 50, 50, 0.5, -50, 50, -0.5, -50, 50, -0.5, 50, -50, 0.5, -50, -50, 0.5, 50, -50, -0.5, -50, -50, 0.5, 50, -50, -0.5, 50, -50, -0.5, -50, 50, 0.5, 50, -50, 0.5, 50, 50, 0.5, -50, -50, 0.5, 50, -50, 0.5, -50, 50, 0.5, -50, -50, -0.5, 50, 50, -0.5, 50, -50, -0.5, -50, 50, -0.5, 50, 50, -0.5, -50, -50, -0.5, -50)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uj34p"]
-radius = 3.93834
+radius = 20.0
 
 [node name="Game" type="Node3D"]
 
@@ -55,7 +55,6 @@ player_scene = ExtResource("3_qynuh")
 spawn_root = NodePath(".")
 
 [node name="MonsterSpawner" type="Area3D" parent="." node_paths=PackedStringArray("MonsterPlaceHolder")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.89174)
 collision_mask = 3
 script = ExtResource("4_uj34p")
 monster_scene = ExtResource("5_b7nn3")
