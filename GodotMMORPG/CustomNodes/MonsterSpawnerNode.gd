@@ -10,6 +10,8 @@ var sync_seed : int = 1
 var has_spawned : bool = false
 
 func _ready() -> void:
+	if multiplayer.is_server():
+		set_multiplayer_authority(1)  # Le serveur a l'autorité
 	NetworkTime.on_tick.connect(monster_spawning)
 	rng.seed = sync_seed  # Seed synchronisé
 
@@ -37,14 +39,9 @@ func batch_monster_spawn():
 			var spawning_radius = get_spawning_radius()
 			var spawning_area_position = get_spawning_area_position()
 			monsterInput.get_spawning_area(spawning_radius,spawning_area_position)
-			MonsterPlaceHolder.add_child(monster, true)
 			monster.set_multiplayer_authority(1, true)
-		
-			print("[Spawn] %s at %s on peer %d" % [
-				monster.name, 
-				monster.global_position,
-				multiplayer.get_unique_id()
-			])
+			MonsterPlaceHolder.add_child(monster, true)
+			await get_tree().create_timer(2).timeout
 			sync_seed += 1
 		
 func random_position_calcule() -> Vector3:

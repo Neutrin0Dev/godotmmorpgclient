@@ -58,7 +58,7 @@ spawn_root = NodePath(".")
 collision_mask = 3
 script = ExtResource("4_uj34p")
 monster_scene = ExtResource("5_b7nn3")
-monster_counter = 10
+monster_counter = 50
 MonsterPlaceHolder = NodePath("MonsterPlaceHolder")
 metadata/_custom_type_script = "uid://bei7x6u5yoh6t"
 

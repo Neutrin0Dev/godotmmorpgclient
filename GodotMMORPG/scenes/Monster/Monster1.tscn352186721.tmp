@@ -27,8 +27,9 @@ mesh = SubResource("CapsuleMesh_ltih6")
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("2_0t8i0")
 root = NodePath("..")
+enable_prediction = true
 state_properties = Array[String]([":global_transform", ":velocity"])
-input_properties = Array[String](["MonsterInput:spawning_area_position", "MonsterInput:spawning_area_radius", "MonsterInput:movement", "MonsterInput:target_position", "MonsterInput:target_pos_bool", "MonsterInput:distance_approx", "MonsterInput:monster_position", "MonsterInput:sync_seed", "MonsterInput:rng", "MonsterInput:monster"])
+input_properties = Array[String](["MonsterInput:movement", "MonsterInput:monster", "MonsterInput:rng", "MonsterInput:sync_seed", "MonsterInput:spawning_area_position", "MonsterInput:spawning_area_radius", "MonsterInput:target_position"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
