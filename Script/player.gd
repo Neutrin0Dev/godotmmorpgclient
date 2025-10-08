@@ -19,22 +19,22 @@ func _ready() -> void:
 	var player_id = name.to_int()
 	var my_id = multiplayer.get_unique_id()
 	
-	if not multiplayer.is_server():
-		if player_id == my_id:
-			# Activer la caméra et les inputs
-			if camera:
-				camera.set_multiplayer_authority(player_id)
-				camera.current = true
-		
-			if player_input:
-				player_input.set_multiplayer_authority(player_id)
-				player_input.set_process(true)
-		else:
-			return
+
+	if player_id == my_id:
+		# Activer la caméra et les inputs
+		if camera:
+			camera.set_multiplayer_authority(player_id)
+			camera.current = true
 	
-		# Initialiser l'interpolation
-		server_position = global_position
-		server_velocity = velocity
+		if player_input:
+			player_input.set_multiplayer_authority(player_id)
+			player_input.set_process(true)
+	else:
+		return
+
+	# Initialiser l'interpolation
+	server_position = global_position
+	server_velocity = velocity
 
 func _physics_process(delta: float) -> void:
 	# SEULEMENT LE SERVEUR calcule la physique

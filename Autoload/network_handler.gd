@@ -45,8 +45,11 @@ func _on_client_disconnect():
 	print("Client disconnected")
 
 func _on_peer_connected(peer_id):
+	player_list[peer_id] = peer_id
+	print(player_list)
 	print(peer_id, " : is connected to the server.")
 	print(peer_id, " : start the game scene")
+	
 	get_tree().change_scene_to_file("res://Scenes/game.tscn")
 	
 func _on_peer_disconnected(peer_id):
