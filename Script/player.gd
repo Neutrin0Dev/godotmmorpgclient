@@ -9,13 +9,13 @@ var current_input := Vector2.ZERO
 # Variables pour l'interpolation côté CLIENT
 var server_position := Vector3.ZERO
 var server_velocity := Vector3.ZERO
-
+var peer_id
 @export var camera : Camera3D
 @export var player_input : PlayerInput
 
 func _ready() -> void:
 	await get_tree().process_frame
-
+	peer_id = name.to_int()
 	# Initialiser l'interpolation
 	server_position = global_position
 	server_velocity = velocity
@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	# Broadcast position à TOUS les clients
-	sync_position.rpc(global_position, velocity)
+	sync_position.rpc(global_position, velocity, peer_id)
 
 func _process(delta: float) -> void:
 	# SEULEMENT LES CLIENTS font l'interpolation
@@ -57,13 +57,14 @@ func _process(delta: float) -> void:
 func send_input_to_server(input):
 	current_input = input
 
+
 # RPC : SERVEUR envoie position → CLIENTS
 @rpc("authority", "call_remote", "unreliable")
-func sync_position(pos: Vector3, vel: Vector3) -> void:
+func sync_position(pos: Vector3, vel: Vector3, peer_id_to_sync : int) -> void:
 	# Seuls les CLIENTS appliquent
 	if multiplayer.is_server():
 		return
-	
-	# Stocker la target pour l'interpolation
-	server_position = pos
-	server_velocity = vel
+	if peer_id_to_sync == name.to_int(): 
+		# Stocker la target pour l'interpolation
+		server_position = pos
+		server_velocity = vel
