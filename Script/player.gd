@@ -37,7 +37,7 @@ func _ready() -> void:
 		server_velocity = velocity
 
 func _physics_process(delta: float) -> void:
-	# ⭐ SEULEMENT LE SERVEUR calcule la physique
+	# SEULEMENT LE SERVEUR calcule la physique
 	if not multiplayer.is_server():
 		return
 	
@@ -61,7 +61,7 @@ func _physics_process(delta: float) -> void:
 	sync_position.rpc(global_position, velocity)
 
 func _process(delta: float) -> void:
-	# ⭐ SEULEMENT LES CLIENTS font l'interpolation
+	# SEULEMENT LES CLIENTS font l'interpolation
 	if multiplayer.is_server():
 		return
 	
@@ -73,7 +73,7 @@ func _process(delta: float) -> void:
 func send_input_to_server(input):
 	current_input = input
 
-# ⭐ RPC : SERVEUR envoie position → CLIENTS
+# RPC : SERVEUR envoie position → CLIENTS
 @rpc("authority", "call_remote", "unreliable")
 func sync_position(pos: Vector3, vel: Vector3) -> void:
 	# Seuls les CLIENTS appliquent
