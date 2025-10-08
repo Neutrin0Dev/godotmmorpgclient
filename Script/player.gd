@@ -70,8 +70,9 @@ func _process(delta: float) -> void:
 	velocity = velocity.lerp(server_velocity, INTERPOLATION_SPEED * delta)
 
 @rpc("any_peer","call_remote","unreliable")
-func send_input_to_server(input):
-	current_input = input
+func send_input_to_server(input, peer_id):
+	if multiplayer.get_remote_sender_id() == peer_id:
+		current_input = input
 
 # RPC : SERVEUR envoie position → CLIENTS
 @rpc("authority", "call_remote", "unreliable")

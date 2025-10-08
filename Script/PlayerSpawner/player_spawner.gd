@@ -6,17 +6,28 @@ extends Node3D
 func _ready() -> void:
 	
 	# ⭐ SERVEUR DÉDIÉ : Pas de joueur pour le host
-	if not multiplayer.is_server():
-		print("PlayerSpawner ready on client side")
-		print("Call the spawning RPC to the server")
-		var player_id = multiplayer.get_unique_id()
-		spawn_player.rpc(player_id)
+	if multiplayer.is_server():
+		print("PlayerSpawner ready on server side - waiting for clients")
 		return
 	
+	# ⭐ CLIENT : On attend un peu que tout soit bien chargé, puis on demande le spawn
+	print("PlayerSpawner ready on client side")
+	# Petit délai pour s'assurer que tout est synchronisé
+	await get_tree().create_timer(0.1).timeout
+	print("Call the spawning RPC to the server")
+	var player_id = multiplayer.get_unique_id()
+	spawn_player.rpc_id(1, player_id) # On envoie explicitement au serveur (ID 1)
+
 @rpc("any_peer","call_remote","reliable")
 func spawn_player(player_id):
+	print("Server: Spawning player ", player_id)
 	var player = player_scene.instantiate()
 	player.name = str(player_id)
 	add_child(player, true)
 	
-	set_multiplayer_authority(1)
+	# ⭐ L'autorité du joueur est donnée à son propriétaire
+	player.set_multiplayer_authority(1)
+	var input = player.find_child("PlayerInput")
+	print(input)
+	if input:
+		input.set_multiplayer_authority(player_id)
