@@ -26,5 +26,13 @@ func spawn_player(player_id):
 	add_child(player, true)
 	
 	# ⭐ L'autorité du joueur est donnée à son propriétaire
-	player.set_multiplayer_authority(1)
+	player.set_multiplayer_authority(player_id, true)
 	
+	var input = player.find_child("PlayerInput")
+	if input:
+		input.set_multiplayer_authority(player_id)
+		
+	var camera = player.find_child("Camera3D")
+	if camera:
+		print("camera detecté")
+		camera.set_multiplayer_authority(player_id)

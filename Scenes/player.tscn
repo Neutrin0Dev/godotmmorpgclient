@@ -8,7 +8,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpqav"]
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "player_input")]
-collision_mask = 2
+collision_layer = 2
 script = ExtResource("1_rpqav")
 camera = NodePath("CameraPivot/Camera3D")
 player_input = NodePath("PlayerInput")

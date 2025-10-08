@@ -8,17 +8,33 @@ var current_input := Vector2.ZERO
 
 # Variables pour l'interpolation côté CLIENT
 var server_position := Vector3.ZERO
-var server_velocity := Vector3.ZERO
+
 var peer_id
+
 @export var camera : Camera3D
 @export var player_input : PlayerInput
 
 func _ready() -> void:
-	await get_tree().process_frame
+	# Récupérer le peer_id depuis le nom du nœud
 	peer_id = name.to_int()
-	# Initialiser l'interpolation
-	server_position = global_position
-	server_velocity = velocity
+	
+	# ⭐ GESTION DE LA CAMÉRA
+	if camera:
+		# Seul le propriétaire du joueur active sa caméra
+		if peer_id == multiplayer.get_unique_id():
+			camera.current = true
+			print("Camera activated for local player: ", peer_id)
+		else:
+			#camera.current = false
+			return
+	if player_input:
+		if peer_id == multiplayer.get_unique_id():
+			return
+		else:
+			player_input.set_multiplayer_authority(peer_id)
+	# Sur le serveur, désactiver toutes les caméras (serveur dédié)
+	#if multiplayer.is_server() and camera:
+		#camera.current = false
 
 func _physics_process(delta: float) -> void:
 	# SEULEMENT LE SERVEUR calcule la physique
@@ -42,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	# Broadcast position à TOUS les clients
-	sync_position.rpc(global_position, velocity, peer_id)
+	sync_position.rpc(global_position)
 
 func _process(delta: float) -> void:
 	# SEULEMENT LES CLIENTS font l'interpolation
@@ -51,20 +67,23 @@ func _process(delta: float) -> void:
 	
 	# Interpolation vers la position serveur
 	global_position = global_position.lerp(server_position, INTERPOLATION_SPEED * delta)
-	velocity = velocity.lerp(server_velocity, INTERPOLATION_SPEED * delta)
 
-@rpc("any_peer","call_remote","unreliable")
-func send_input_to_server(input):
+@rpc("any_peer", "call_remote", "unreliable")
+func send_input_to_server(input: Vector2) -> void:
+	# Vérification : on vérifie que c'est le bon client qui envoie
+	var sender_id = multiplayer.get_remote_sender_id()
+	
+	# Si l'input ne vient pas du propriétaire de ce joueur, on ignore
+	if sender_id != peer_id:
+		return
+	
 	current_input = input
 
-
 # RPC : SERVEUR envoie position → CLIENTS
-@rpc("authority", "call_remote", "unreliable")
-func sync_position(pos: Vector3, vel: Vector3, peer_id_to_sync : int) -> void:
+@rpc("authority", "call_local", "unreliable")
+func sync_position(pos: Vector3) -> void:
 	# Seuls les CLIENTS appliquent
 	if multiplayer.is_server():
 		return
-	if peer_id_to_sync == name.to_int(): 
-		# Stocker la target pour l'interpolation
-		server_position = pos
-		server_velocity = vel
+
+	server_position = pos

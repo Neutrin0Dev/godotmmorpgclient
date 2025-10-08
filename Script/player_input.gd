@@ -2,19 +2,13 @@
 extends Node
 class_name PlayerInput
 
-var peer_id 
-
 func _ready() -> void:
 	await get_tree().process_frame
-	peer_id = get_parent().name.to_int()
-	set_multiplayer_authority(peer_id)
 	# ⭐ SERVEUR : Jamais actif
 	if multiplayer.is_server():
-		print("SERVER : PLAYERINPUT : ", peer_id)
 		set_process(false)
 		return
 	else:
-		print("CLIENT : PLAYERINPUT : ", peer_id)
 		set_process(true)
 
 func _process(_delta: float) -> void:
