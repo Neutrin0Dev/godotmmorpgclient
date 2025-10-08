@@ -65,4 +65,4 @@ rollback/history_limit=600
 
 [physics]
 
-common/physics_ticks_per_second=20
+common/physics_ticks_per_second=10

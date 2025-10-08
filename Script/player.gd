@@ -2,7 +2,7 @@
 extends CharacterBody3D
 
 const SPEED := 5.0
-const INTERPOLATION_SPEED := 10.0
+const INTERPOLATION_SPEED := 5.0
 
 var current_input := Vector2.ZERO
 
@@ -18,12 +18,11 @@ func _ready() -> void:
 	# Récupérer le peer_id depuis le nom du nœud
 	peer_id = name.to_int()
 	
-	# ⭐ GESTION DE LA CAMÉRA
+	# GESTION DE LA CAMÉRA
 	if camera:
 		# Seul le propriétaire du joueur active sa caméra
 		if peer_id == multiplayer.get_unique_id():
 			camera.current = true
-			print("Camera activated for local player: ", peer_id)
 		else:
 			#camera.current = false
 			return

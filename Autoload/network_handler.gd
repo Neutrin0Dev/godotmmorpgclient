@@ -43,9 +43,6 @@ func _on_client_connected():
 	if player_list.has(peer_id):
 		return
 	else:
-		
-		print("Client is connected to the server")
-	
 		# Le client charge la scène quand il se connecte
 		await get_tree().process_frame
 		get_tree().change_scene_to_file("res://Scenes/game.tscn")
