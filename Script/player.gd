@@ -15,21 +15,6 @@ var server_velocity := Vector3.ZERO
 
 func _ready() -> void:
 	await get_tree().process_frame
-	
-	var player_id = name.to_int()
-	var my_id = multiplayer.get_unique_id()
-	
-	if player_id == my_id:
-		# Activer la caméra et les inputs
-		if camera:
-			camera.set_multiplayer_authority(player_id)
-			camera.current = true
-	
-		if player_input:
-			player_input.set_multiplayer_authority(player_id)
-			player_input.set_process(true)
-	else:
-		return
 
 	# Initialiser l'interpolation
 	server_position = global_position
@@ -69,9 +54,8 @@ func _process(delta: float) -> void:
 	velocity = velocity.lerp(server_velocity, INTERPOLATION_SPEED * delta)
 
 @rpc("any_peer","call_remote","unreliable")
-func send_input_to_server(input, peer_id):
-	if multiplayer.get_remote_sender_id() == peer_id:
-		current_input = input
+func send_input_to_server(input):
+	current_input = input
 
 # RPC : SERVEUR envoie position → CLIENTS
 @rpc("authority", "call_remote", "unreliable")

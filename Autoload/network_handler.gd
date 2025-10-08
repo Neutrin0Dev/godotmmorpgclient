@@ -29,7 +29,7 @@ func start_server():
 	var peer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT,MAX_CLIENTS)
 	multiplayer.multiplayer_peer = peer
-	# ⭐ Le serveur charge la scène immédiatement
+	# Le serveur charge la scène immédiatement
 	get_tree().change_scene_to_file("res://Scenes/game.tscn")
 
 func start_client():
@@ -39,7 +39,8 @@ func start_client():
 
 func _on_client_connected():
 	print("Client is connected to the server")
-	# ⭐ Le client charge la scène quand il se connecte
+	# Le client charge la scène quand il se connecte
+	await get_tree().process_frame
 	get_tree().change_scene_to_file("res://Scenes/game.tscn")
 
 func _on_client_connexion_fail():
