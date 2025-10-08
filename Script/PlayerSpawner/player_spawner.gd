@@ -28,6 +28,7 @@ func spawn_player(player_id):
 	# ⭐ L'autorité du joueur est donnée à son propriétaire
 	player.set_multiplayer_authority(1)
 	var input = player.find_child("PlayerInput")
-	print(input)
 	if input:
+		print("y'a l'input pour le peer : ", player_id)
 		input.set_multiplayer_authority(player_id)
+		print("Autorité pour l'input de : ",player_id, " est : " , input.get_multiplayer_authority())

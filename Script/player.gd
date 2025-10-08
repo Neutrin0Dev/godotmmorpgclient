@@ -19,7 +19,6 @@ func _ready() -> void:
 	var player_id = name.to_int()
 	var my_id = multiplayer.get_unique_id()
 	
-
 	if player_id == my_id:
 		# Activer la caméra et les inputs
 		if camera:

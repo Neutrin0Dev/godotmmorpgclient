@@ -50,7 +50,6 @@ func _on_client_disconnect():
 
 func _on_peer_connected(peer_id):
 	player_list[peer_id] = peer_id
-	print(player_list)
 	print(peer_id, " : is connected to the server.")
 	
 func _on_peer_disconnected(peer_id):
