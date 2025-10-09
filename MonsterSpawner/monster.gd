@@ -5,7 +5,7 @@ const SPEED := 2.0
 const STOP_DISTANCE := 1.0
 const MIN_WAIT_TIME := 5.0
 const MAX_WAIT_TIME := 12.0
-const INTERPOLATION_SPEED := 10.0 # Même valeur que ton joueur pour la cohérence
+const INTERPOLATION_SPEED := 10.0 
 
 # --- Variables d'état (serveur) ---
 var radius: float
@@ -26,7 +26,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if multiplayer.is_server():
 		_handle_server_movement(delta)
-	# Les clients ne font RIEN dans _physics_process (tout est géré dans _process)
 
 # --------------------------------------------------------------------
 func _handle_server_movement(delta: float) -> void:
@@ -59,12 +58,11 @@ func _handle_server_movement(delta: float) -> void:
 
 	move_and_slide()
 
-	# ⚠️ ENVOI LA POSITION À CHAQUE _physics_process (comme ton joueur)
 	sync_position.rpc(global_position)
 
 # --------------------------------------------------------------------
 func _process(delta: float) -> void:
-	# SEULEMENT LES CLIENTS font l'interpolation (comme ton joueur)
+	# SEULEMENT LES CLIENTS font l'interpolation
 	if not multiplayer.is_server():
 		global_position = global_position.lerp(server_position, INTERPOLATION_SPEED * delta)
 
@@ -75,9 +73,9 @@ func _find_random_target() -> void:
 	target_position = radius_center + Vector3(cos(random_angle), 0, sin(random_angle)) * random_radius
 	
 # --------------------------------------------------------------------
-# RPC : SERVEUR envoie position → CLIENTS (comme ton joueur)
+# RPC : SERVEUR envoie position → CLIENTS 
 @rpc("any_peer", "call_remote", "unreliable")
 func sync_position(pos: Vector3) -> void:
 	if multiplayer.is_server():
-		return  # Le serveur ignore ce RPC
-	server_position = pos  # Les clients stockent la position pour l'interpolation
+		return  
+	server_position = pos  
