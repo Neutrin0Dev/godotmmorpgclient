@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://v280gyu4un1y"]
+
+[ext_resource type="Script" uid="uid://bj6m5c68j53jl" path="res://MonsterSpawner/monster_spawner.gd" id="1_hvq71"]
+[ext_resource type="PackedScene" uid="uid://dikbgc1k16w57" path="res://MonsterSpawner/monster.tscn" id="2_6wlwt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_okyus"]
+radius = 40.0
+
+[node name="MonsterSpawner" type="Node3D" node_paths=PackedStringArray("spawn_path", "spawn_area")]
+script = ExtResource("1_hvq71")
+monster_name = "Monster"
+monster_scene = ExtResource("2_6wlwt")
+monster_counter = 10
+spawn_path = NodePath("MonsterPlaceHolder")
+spawn_area = NodePath("Area3D/CollisionShape3D")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_okyus")
+
+[node name="MonsterPlaceHolder" type="Node3D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="MonsterPlaceHolder"]
+_spawnable_scenes = PackedStringArray("uid://dikbgc1k16w57")
+spawn_path = NodePath("..")

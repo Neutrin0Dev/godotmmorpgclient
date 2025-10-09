@@ -2,18 +2,35 @@
 extends Node
 class_name PlayerInput
 
+var is_ready_to_send := false
+
 func _ready() -> void:
+	# Attendre que tout soit bien initialisé
 	await get_tree().process_frame
-	# ⭐ SERVEUR : Jamais actif
+	
+	#SERVEUR : Jamais actif
 	if multiplayer.is_server():
 		set_process(false)
 		return
-	else:
-		set_process(true)
+	
+	# Attendre que le parent (player) soit bien setup
+	await get_tree().create_timer(0.2).timeout
+	
+	# Vérifier qu'on est bien sur NOTRE joueur
+	var parent_peer_id = get_parent().name.to_int()
+	var our_peer_id = multiplayer.get_unique_id()
+	
+	if parent_peer_id != our_peer_id:
+		# Ce n'est pas notre joueur, on désactive
+		set_process(false)
+		return
+
+	is_ready_to_send = true
+	set_process(true)
 
 func _process(_delta: float) -> void:
-	
-	if multiplayer.is_server():
+	# Double vérification
+	if multiplayer.is_server() or not is_ready_to_send:
 		return
 	
 	# Lire les inputs

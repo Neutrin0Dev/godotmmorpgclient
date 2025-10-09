@@ -2,14 +2,14 @@
 extends CharacterBody3D
 
 const SPEED := 5.0
-const INTERPOLATION_SPEED := 5.0
+const INTERPOLATION_SPEED := 10.0
 
 var current_input := Vector2.ZERO
 
 # Variables pour l'interpolation côté CLIENT
 var server_position := Vector3.ZERO
 
-var peer_id
+var peer_id : int
 
 @export var camera : Camera3D
 @export var player_input : PlayerInput
@@ -18,22 +18,14 @@ func _ready() -> void:
 	# Récupérer le peer_id depuis le nom du nœud
 	peer_id = name.to_int()
 	
-	# GESTION DE LA CAMÉRA
+	print("Player %d ready (I am %d)" % [peer_id, multiplayer.get_unique_id()])
+	
+	# GESTION DE LA CAMÉRA : Seul le propriétaire active sa caméra
 	if camera:
-		# Seul le propriétaire du joueur active sa caméra
-		if peer_id == multiplayer.get_unique_id():
-			camera.current = true
-		else:
-			#camera.current = false
-			return
-	if player_input:
-		if peer_id == multiplayer.get_unique_id():
-			return
-		else:
-			player_input.set_multiplayer_authority(peer_id)
-	# Sur le serveur, désactiver toutes les caméras (serveur dédié)
-	#if multiplayer.is_server() and camera:
-		#camera.current = false
+		var is_mine = (peer_id == multiplayer.get_unique_id())
+		camera.current = is_mine
+		if is_mine:
+			print("Camera activated for my player %d" % peer_id)
 
 func _physics_process(delta: float) -> void:
 	# SEULEMENT LE SERVEUR calcule la physique
@@ -67,22 +59,28 @@ func _process(delta: float) -> void:
 	# Interpolation vers la position serveur
 	global_position = global_position.lerp(server_position, INTERPOLATION_SPEED * delta)
 
-@rpc("any_peer", "call_remote", "unreliable")
+# RPC : CLIENT envoie input → SERVEUR
+@rpc("any_peer", "call_remote", "reliable")
 func send_input_to_server(input: Vector2) -> void:
-	# Vérification : on vérifie que c'est le bon client qui envoie
+	# Vérification : seul le serveur reçoit ce RPC
+	if not multiplayer.is_server():
+		return
+	
+	# Vérifier que c'est le bon client qui envoie
 	var sender_id = multiplayer.get_remote_sender_id()
 	
 	# Si l'input ne vient pas du propriétaire de ce joueur, on ignore
 	if sender_id != peer_id:
+		push_warning("Player %d received input from wrong sender %d" % [peer_id, sender_id])
 		return
 	
 	current_input = input
 
 # RPC : SERVEUR envoie position → CLIENTS
-@rpc("authority", "call_local", "unreliable")
+@rpc("authority", "call_remote", "unreliable")
 func sync_position(pos: Vector3) -> void:
-	# Seuls les CLIENTS appliquent
+	# Seuls les CLIENTS reçoivent et appliquent
 	if multiplayer.is_server():
 		return
-
+	
 	server_position = pos
