@@ -5,7 +5,7 @@ const SPEED := 2.0
 const STOP_DISTANCE := 1.0
 const MIN_WAIT_TIME := 5.0
 const MAX_WAIT_TIME := 12.0
-const INTERPOLATION_SPEED := 10.0 
+const INTERPOLATION_SPEED := 0.1 
 
 # --- Variables d'état (serveur) ---
 var radius: float
@@ -20,7 +20,9 @@ var server_position: Vector3 = Vector3.ZERO
 # --------------------------------------------------------------------
 func _ready() -> void:
 	if multiplayer.is_server():
+		sync_position.rpc(global_position)
 		print("Radius : ",radius, " Radius center : ", radius_center)
+		Engine.physics_ticks_per_second = 1
 		_find_random_target()
 # --------------------------------------------------------------------
 func _physics_process(delta: float) -> void:
